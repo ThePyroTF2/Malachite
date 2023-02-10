@@ -1,0 +1,29 @@
+// This is an example of how I'd like Malachite to look syntactictally. It's heavily based upon Typescript, with my own little things going on.
+
+// The `distance` type and its many units would be part of the default library. This is just what it looks like
+type distance = Number
+
+unit inch(distance) = {
+    per1(foot) = 12
+}
+
+unit foot(distance) = {
+    per1(meter) = 3.280839895
+}
+
+unit meter(distance) = {
+    per1(foot) = 0.3048
+//  ~~~~~~~~~~~~~~~~~~~
+//  Error: conversion between [foot] and [meter] already defined
+}
+
+let length: distance(foot) = 1
+
+console.log(length.to(inch)) // Returns 12
+console.log(length.to(meter)) // Returns 3.280839895
+
+const Sin = (angle: angle) => {
+    // In this case, `Math.sin()` takes an angle in radians.
+    if(unitof(angle) == radian) return Math.sin(angle)
+    return Math.sin(angle.to(radian))
+}
